@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adey Art</title>
+  <meta name="description" content="Hand drawn Ethiopian holiday flower drawings on paper by 12 year old Daniel Bokona.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo/adey-logo.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="assets/logo/adey-logo.svg">
+  <link rel="apple-touch-icon" href="assets/logo/adey-logo.svg">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header" id="siteHeader">
+    <div class="container nav-bar">
+      <a href="#" class="brand" data-route="home" aria-label="Adey Art Home">
+        <img
+          src="assets/logo/adey-logo.svg"
+          alt="Adey Abeba flower emblem"
+          class="brand-logo-img"
+          width="40"
+          height="40"
+          loading="eager"
+        >
+        <span class="brand-text">Adey Art</span>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links" id="navLinks">
+          <li><button class="nav-link active" data-route="home">Home</button></li>
+          <li><button class="nav-link" data-route="gallery">Gallery</button></li>
+          <li><button class="nav-link" data-route="tradition">Tradition</button></li>
+          <li><button class="nav-link" data-route="artist">About Me</button></li>
+          <li>
+            <button class="nav-link" data-route="favorites">
+              Saved <span class="badge-pill" id="favBadge" hidden>0</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+    <div class="nav-scrim" id="navScrim"></div>
+    <div class="tibeb-band" aria-hidden="true"></div>
+  </header>
+
+  <main class="container">
+    <!-- =======================================================================
+       VIEW: HOME
+       ======================================================================= -->
+    <section id="view-home" class="view active">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="hero-badge-pill"><span class="flag-chip" aria-hidden="true"></span>Ethiopian New Year • 2019</div>
+          <h1 class="hero-title">
+            Brighten <span>2019 Enkutatash</span> with digital flowers.
+          </h1>
+          <p class="hero-desc">
+            On Enkutatash, young boys walk door to door gifting hand made flower drawings to celebrate the end of winter rains and welcome sunny spring days. I am Daniel, a self taught developer and I hand paint each flower drawing on paper with festive holiday wishes and digitize them so anyone can collect and share them.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-route="gallery">Browse Collection</button>
+            <button class="btn btn-outline" data-route="tradition">Discover The Story</button>
+          </div>
+        </div>
+
+        <!-- Carousel Gallery Preview -->
+        <div class="carousel-wrapper">
+          <button class="carousel-nav-btn carousel-prev" id="carouselPrev" aria-label="Previous artwork">←</button>
+          <button class="carousel-nav-btn carousel-next" id="carouselNext" aria-label="Next artwork">→</button>
+
+          <div class="carousel-stage" id="carouselStage">
+            <div class="carousel-track" id="carouselTrack">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+
+          <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+      </div>
+
+      <!-- Core Context Pillars -->
+      <div class="home-summary-grid">
+        <div class="summary-card">
+          <div class="section-tag">The Royal Gift</div>
+          <h3>Enku: Gift of Jewels</h3>
+          <p>
+            Three thousand years ago, Queen Makeda returned from Jerusalem to Aksum. Her chieftains welcomed her with glittering jewels just as yellow wild daisies broke through the mountain soil.
+          </p>
+        </div>
+
+        <div class="summary-card">
+          <div class="section-tag">Hand Drawn Custom</div>
+          <h3>Why Boys Draw Flowers</h3>
+          <p>
+            While girls sing Abebayehosh with fresh bouquets, boys hand sketch festive blossoms and saints to wish neighbors prosperity in return for holiday bread or coins.
+          </p>
+        </div>
+
+        <div class="summary-card">
+          <div class="section-tag">Flora Symbolism</div>
+          <h3>Abebayehosh & Renewal</h3>
+          <p>
+            The brief, golden bloom of the indigenous Adey Abeba blankets the highlands, symbolizing warmth, peace, and uninterrupted community renewal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+       VIEW: TRADITION
+       ======================================================================= -->
+    <section id="view-tradition" class="view">
+      <article class="tradition-story-container">
+
+        <header class="story-hero-header">
+          <span class="section-tag">Living Heritage</span>
+          <h1 class="section-heading" style="font-size: var(--type-display); margin-top: 12px;">
+            The Living Story of Enkutatash
+          </h1>
+          <p class="section-subtitle" style="margin: 12px auto 0;">
+            From ancient royal treasures in Aksum to our neighborhood tradition of hand drawing golden Adey Abeba blooms.
+          </p>
+        </header>
+
+        <div class="story-timeline">
+          <!-- Chapter 1 -->
+          <div class="story-chapter">
+            <div class="chapter-text">
+              <div class="chapter-badge">Chapter I • The Ancient Origin</div>
+              <h2 class="chapter-title">The Royal Homecoming: A Gift of Jewels</h2>
+              <p>
+                The name <strong>Enkutatash</strong> literally translates to <em>"Gift of Jewels"</em> in Amharic. The tradition traces back roughly three thousand years to Queen Makeda, the Queen of Sheba.
+              </p>
+              <p>
+                Following her historic journey to visit King Solomon in Jerusalem, she returned to her capital of Aksum in early September. Regional chieftains greeted her by filling her treasury with precious gems known as <em>Enku</em>.
+              </p>
+              <div class="chapter-quote">
+                Her royal homecoming coincided with yellow highland daisies blooming across the plateaus, permanently uniting royal abundance with the natural rebirth of spring.
+              </div>
+            </div>
+            <div class="chapter-visual">
+              <img
+                src="assets/logo/c1.jpg"
+                alt="Queen Makeda's chieftains greeting her with jewels"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='assets/tradition/queen-makeda.svg';"
+              >
+              <span class="visual-caption">The historic monumental obelisks of Aksum, where chiefs greeted Queen Makeda with jewels.</span>
+            </div>
+          </div>
+
+          <!-- Chapter 2 -->
+          <div class="story-chapter">
+            <div class="chapter-text">
+              <div class="chapter-badge">Chapter II • Seasonal Rebirth</div>
+              <h2 class="chapter-title">The End of Winter & The Golden Blanket</h2>
+              <p>
+                Ethiopia's rainy season, <em>Kiremt</em>, covers the months of June through August with overcast skies, thunder, and rain.
+              </p>
+              <p>
+                By late August, the clouds lift to bright sunshine, and the <strong>Adey Abeba</strong> daisy opens across mountain meadows for a brief two month season.
+              </p>
+              <div class="chapter-quote">
+                Because its vibrant golden petals appear only during this transitional period, its presence across the green hills is nature's official announcement of the New Year.
+              </div>
+            </div>
+            <div class="chapter-visual">
+              <img
+                src="assets/logo/c2.jpg"
+                alt="Radiant yellow wild daisies blooming across open meadows"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='assets/tradition/daisy-field.svg';"
+              >
+              <span class="visual-caption">Wild yellow daisies blanketing the countryside as winter rain subsides.</span>
+            </div>
+          </div>
+
+          <!-- Chapter 3 -->
+          <div class="story-chapter">
+            <div class="chapter-text">
+              <div class="chapter-badge">Chapter III • Children's Artistry</div>
+              <h2 class="chapter-title">Why Young Boys Draw & Gift Flowers</h2>
+              <p>
+                On New Year's morning, holiday roles divide into harmonious halves. While girls sing <em>"Abebayehosh"</em> with drums, boys sketch detailed pictures of flowers on paper, writing New Year wishes and the holiday year across each page.
+              </p>
+              <p>
+                Going door to door, we hand our paper drawings to neighbors and elders as blessings of peace and goodwill. Families warmly invite us in, offering freshly baked holiday bread or small coins.
+              </p>
+            </div>
+            <div class="chapter-visual">
+              <img
+                src="assets/logo/c3.jpg"
+                alt="A hand sketching a flower drawing on paper with colored pencils"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='assets/tradition/hand-drawing.svg';"
+              >
+              <span class="visual-caption">Handmade art: sketching flower drawings on paper with warm holiday greetings.</span>
+            </div>
+          </div>
+
+          <!-- Chapter 4 -->
+          <div class="story-chapter">
+            <div class="chapter-text">
+              <div class="chapter-badge">Chapter IV • The Sacred Continuation</div>
+              <h2 class="chapter-title">Continuity into the Meskel Festival</h2>
+              <p>
+                The blooming season of the Adey Abeba continues straight into <strong>Meskel</strong> on September 27.
+              </p>
+              <p>
+                During the celebration, tall wooden pyramidal pyres called the <em>Demera</em> are raised, with yellow Adey Abeba bouquets attached to their very top.
+              </p>
+            </div>
+            <div class="chapter-visual">
+              <img
+                src="assets/logo/c4.jpg"
+                alt="The Demera bonfire at Meskel, topped with yellow flowers, at dusk"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='assets/tradition/meskel-demera.svg';"
+              >
+              <span class="visual-caption">The sacred Demera gathering in Meskel Square adorned with Adey Abeba blooms.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ritual Details -->
+        <section class="ritual-deep-dive">
+          <div class="ritual-deep-dive-intro">
+            <span class="section-tag">Holiday Heritage</span>
+            <h3 class="section-heading" style="font-size: var(--type-h2);">The Values Behind Abebayehosh</h3>
+            <p style="color: var(--color-text-secondary); margin-top: 8px;">
+              Every movement, flower, and reciprocal gift reflects shared hospitality and intergenerational blessings.
+            </p>
+          </div>
+
+          <div class="ritual-grid">
+            <div class="ritual-item">
+              <div class="ritual-icon-bubble">💛</div>
+              <h4>Symbolism of Yellow</h4>
+              <p>
+                In Ethiopian tradition, the color yellow represents peace, reconciliation, sunshine, and love.
+              </p>
+            </div>
+
+            <div class="ritual-item">
+              <div class="ritual-icon-bubble">🥁</div>
+              <h4>The Abebayehosh Anthem</h4>
+              <p>
+                Translating to <em>"I have seen the flowers,"</em> the song celebrates the arrival of spring and sunshine.
+              </p>
+            </div>
+
+            <div class="ritual-item">
+              <div class="ritual-icon-bubble">🥖</div>
+              <h4>Community Generosity</h4>
+              <p>
+                Households welcome children with holiday bread and gifts, nurturing community bonds across generations.
+              </p>
+            </div>
+          </div>
+
+          <div class="tradition-cta">
+            <button class="btn btn-primary" data-route="gallery">Collect My Hand Drawn Artwork</button>
+          </div>
+        </section>
+
+      </article>
+    </section>
+
+    <!-- =======================================================================
+       VIEW: GALLERY
+       ======================================================================= -->
+    <section id="view-gallery" class="view">
+      <div class="view-heading-block">
+        <span class="section-tag">Paper Drawings & Paintings</span>
+        <h2 class="section-heading">Hand Drawn Flower Gallery</h2>
+        <p class="section-subtitle">
+          Photographs of my original paper drawings with written holiday wishes and new year dates. Contributions start at <strong>20 ETB</strong>.
+        </p>
+        <input type="text" id="searchInput" class="input-search" placeholder="Search by title..." aria-label="Search catalog">
+      </div>
+
+      <div class="card-grid" id="galleryGrid"></div>
+    </section>
+
+    <!-- =======================================================================
+       VIEW: FAVORITES
+       ======================================================================= -->
+    <section id="view-favorites" class="view">
+      <div class="view-heading-block">
+        <span class="section-tag">Shortlist</span>
+        <h2 class="section-heading">Saved Artworks</h2>
+        <p class="section-subtitle">Your curated selection of holiday pieces.</p>
+      </div>
+      <div class="card-grid" id="favoritesGrid"></div>
+    </section>
+
+    <!-- =======================================================================
+       VIEW: ABOUT ME
+       ======================================================================= -->
+    <section id="view-artist" class="view">
+      <div class="about-card">
+        <div class="avatar-wrapper">
+          <img
+            src="assets/logo/daniel.jpg"
+            alt="Daniel - 12-year-old self-taught developer and artist"
+            class="daniel-real-photo"
+            onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';"
+          >
+          <div id="avatarFallback" class="avatar-placeholder-fallback">👦🏽</div>
+        </div>
+
+        <div>
+          <span class="section-tag about-eyebrow">Developer</span>
+          <h2 class="section-heading" style="font-size: var(--type-h2); margin-bottom: 4px;">Hi, I'm Daniel Bokona</h2>
+          <p style="color: var(--color-brand-green); font-weight: 700; margin-bottom: 12px;">12 Years Old • Self Taught Developer & creator</p>
+          <p class="about-body">
+            I am a 12 year old self taught developer. Every Ethiopian New Year, I sketch and paint flower blooms on paper, write warm wishes across the sheets, and give them to my neighbors. Through Adey Art, I've digitized these real paper drawings so anyone can share in our holiday celebration.
+          </p>
+          <div class="about-quote">
+            "I love writing code and drawing beautiful flowers to make people smile when Enkutatash arrives!"
+          </div>
+          <div>
+            <a href="https://t.me/danilitcoder" target="_blank" rel="noopener noreferrer" class="btn btn-telegram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.718-1.574 7.234-2.289 10.53-.303 1.396-.818 1.862-1.314 1.908-.946.086-1.663-.626-2.58-1.227-1.434-.94-2.244-1.525-3.636-2.443-1.609-1.061-.566-1.644.351-2.597.24-.249 4.408-4.041 4.488-4.384.01-.043.018-.204-.078-.289-.096-.084-.237-.056-.34-.032-.145.033-2.457 1.564-6.937 4.588-.656.451-1.25.671-1.781.659-.586-.013-1.713-.332-2.553-.605-1.03-.335-1.848-.512-1.777-1.08.037-.296.444-.599 1.221-.91 4.79-2.086 7.986-3.463 9.589-4.13 4.558-1.9 5.506-2.231 6.124-2.242.136-.002.439.032.635.192.166.135.212.318.234.446.022.128.049.42.028.647z"/>
+              </svg>
+              Join My Telegram Channel (@danilitcoder)
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="tibeb-band" aria-hidden="true"></div>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo/adey-logo.svg" alt="" class="footer-brand-logo" width="32" height="32">
+        <div>
+          <div class="footer-brand-text">Adey Art</div>
+          <div class="footer-tagline">Hand drawn holiday flowers, digitized</div>
+        </div>
+      </div>
+
+      <ul class="footer-links">
+        <li><button data-route="gallery">Gallery</button></li>
+        <li><button data-route="tradition">Tradition</button></li>
+        <li><button data-route="artist">About Me</button></li>
+      </ul>
+
+      <div class="footer-meta">Made by <a href="https://t.me/danilitcoder" target="_blank" rel="noopener noreferrer" class="footer-credit-link">Daniel Bokona</a></div>
+    </div>
+  </footer>
+
+  <!-- Checkout & Acquisition Modal -->
+  <div class="modal-backdrop" id="purchaseModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <button class="modal-close" id="btnCloseModal" aria-label="Close dialog">✕</button>
+
+      <!-- Details View -->
+      <div id="modalStageDetails">
+        <div class="modal-split">
+          <div class="modal-preview-frame">
+            <img id="modalImg" src="" alt="" style="max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 6px;">
+          </div>
+          <div>
+            <h3 class="card-title" id="modalTitle" style="font-size: 1.3rem; margin-top: 0;"></h3>
+            <p class="modal-artist-line">Drawn by: <strong>Daniel Bokona</strong></p>
+            <p class="modal-desc" id="modalDesc"></p>
+
+            <div class="contribution-box">
+              <label class="contribution-label">
+                Contribution (Minimum <span id="modalMinPrice">20</span> ETB):
+              </label>
+              <input type="number" id="inputCustomPrice" class="input-search contribution-input" min="20" value="20">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;" id="btnProceedCheckout">Continue to Payment</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Gateway Selector -->
+      <div id="modalStagePayment" style="display: none;">
+        <h3 class="modal-section-title">Order Settlement</h3>
+        <p class="modal-section-desc">
+          Direct transfer to merchant settlement accounts:
+        </p>
+
+        <div class="payment-selection">
+          <div class="payment-tile selected" data-method="Telebirr">Telebirr</div>
+          <div class="payment-tile" data-method="CBE">CBE Birr</div>
+        </div>
+
+        <div class="transfer-box">
+          <div class="transfer-box-label">Transfer Destination:</div>
+          <div class="transfer-box-value" id="recipientNumber"> 0912345678 (Telebirr)</div>
+        </div>
+
+        <div class="upload-field">
+          <label for="proofFileInput">Upload Payment Receipt</label>
+          <input type="file" id="proofFileInput" accept="image/*">
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%;" id="btnSubmitVerification" disabled>Authorize & Verify Transaction</button>
+      </div>
+
+      <!-- Settlement Status -->
+      <div id="modalStageProcessing" class="modal-processing" style="display: none;">
+        <h3 id="verificationHeading">Verification in Progress</h3>
+        <p id="verificationText">
+          Checking your transaction receipt against our mobile payment records...
+        </p>
+        <div id="downloadContainer" class="download-container">
+          <button class="btn btn-primary" id="btnDownloadArtifact">⬇️ Download High-Res Drawing Photo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Holiday Background Music -->
+  <audio id="bgMusic" src="assets/music/holiday.m4a" loop preload="auto"></audio>
+  <button
+    class="music-toggle"
+    id="musicToggle"
+    type="button"
+    aria-pressed="true"
+    aria-label="Mute holiday music"
+    title="Mute holiday music"
+  >🎵</button>
+
+  <script src="app.js"></script>
+</body>
+</html>
