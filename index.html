@@ -15,6 +15,42 @@
 </head>
 <body>
 
+  <!-- Entry Gate -->
+  <div class="entry-gate" id="entryGate" role="dialog" aria-modal="true" aria-label="Welcome to Adey Art">
+    <div class="entry-gate-petals" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="entry-gate-inner">
+      <div class="entry-gate-eyebrow"><span class="flag-chip" aria-hidden="true"></span>2019 Ethiopian New Year</div>
+      <svg class="entry-gate-flower" viewBox="0 0 120 120" aria-hidden="true">
+        <g transform="translate(60,60)">
+          <g class="flower-petals">
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(0)"></ellipse>
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(45)"></ellipse>
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(90)"></ellipse>
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(135)"></ellipse>
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(180)"></ellipse>
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(225)"></ellipse>
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(270)"></ellipse>
+            <ellipse cx="0" cy="-34" rx="12" ry="26" transform="rotate(315)"></ellipse>
+          </g>
+          <circle class="flower-center" r="14"></circle>
+        </g>
+      </svg>
+      <h1 class="entry-gate-title">Adey Art</h1>
+      <p class="entry-gate-sub">A little collection of flowers for a new year.</p>
+      <p class="entry-gate-story">Every Enkutatash, I draw Adey Abeba blooms on paper and gift them door to door for good luck. This is my 2019 collection, step in and pick the one that's yours.</p>
+      <button class="btn btn-primary entry-gate-btn" id="btnEnterGarden" type="button">
+        <span>Enter the Garden</span><span class="entry-gate-arrow" aria-hidden="true">→</span>
+      </button>
+      <label class="entry-gate-music-check">
+        <input type="checkbox" id="entryMusicCheck" checked>
+        <span>Play holiday music <span aria-hidden="true">🎶</span></span>
+      </label>
+      <div class="entry-gate-band" aria-hidden="true"></div>
+    </div>
+  </div>
+
   <!-- Navigation Bar -->
   <header class="header" id="siteHeader">
     <div class="container nav-bar">
@@ -34,8 +70,8 @@
         <ul class="nav-links" id="navLinks">
           <li><button class="nav-link active" data-route="home">Home</button></li>
           <li><button class="nav-link" data-route="gallery">Gallery</button></li>
-          <li><button class="nav-link" data-route="tradition">Tradition</button></li>
-          <li><button class="nav-link" data-route="artist">About Me</button></li>
+          <li><button class="nav-link" data-route="tradition">Story Time</button></li>
+          <li><button class="nav-link" data-route="artist">Meet the Artist</button></li>
           <li>
             <button class="nav-link" data-route="favorites">
               Saved <span class="badge-pill" id="favBadge" hidden>0</span>
@@ -285,12 +321,18 @@
         <span class="section-tag">Paper Drawings & Paintings</span>
         <h2 class="section-heading">Hand Drawn Flower Gallery</h2>
         <p class="section-subtitle">
-          Photographs of my original paper drawings with written holiday wishes and new year dates. Contributions start at <strong>20 ETB</strong>.
+          Photographs of my original paper drawings, each inscribed with holiday wishes and the new year date. Every piece is pay-what-you-feel — send whatever amount feels right to you.
         </p>
-        <input type="text" id="searchInput" class="input-search" placeholder="Search by title..." aria-label="Search catalog">
+        <p class="gallery-stats-banner">9 original artworks • 142 flowers collected</p>
       </div>
 
       <div class="card-grid" id="galleryGrid"></div>
+
+      <!-- Pre-footer support banner -->
+      <div class="gallery-support-banner">
+        <p class="gallery-support-banner-text">These flowers started on paper. I just gave them a place to bloom online. 🌼</p>
+        <button class="btn btn-primary" id="btnGallerySupport" type="button">Support Daniel's art →</button>
+      </div>
     </section>
 
     <!-- =======================================================================
@@ -310,7 +352,7 @@
        ======================================================================= -->
     <section id="view-artist" class="view">
       <div class="about-card">
-        <div class="avatar-wrapper">
+        <div class="avatar-wrapper avatar-wrapper-lg">
           <img
             src="assets/logo/daniel.jpg"
             alt="Daniel - 12-year-old self-taught developer and artist"
@@ -357,11 +399,9 @@
 
       <ul class="footer-links">
         <li><button data-route="gallery">Gallery</button></li>
-        <li><button data-route="tradition">Tradition</button></li>
-        <li><button data-route="artist">About Me</button></li>
+        <li><button data-route="tradition">Story Time</button></li>
+        <li><button data-route="artist">Meet the Artist</button></li>
       </ul>
-
-      <div class="footer-meta">Made by <a href="https://t.me/danilitcoder" target="_blank" rel="noopener noreferrer" class="footer-credit-link">Daniel Bokona</a></div>
     </div>
   </footer>
 
@@ -383,12 +423,22 @@
 
             <div class="contribution-box">
               <label class="contribution-label">
-                Contribution (Minimum <span id="modalMinPrice">20</span> ETB):
+                Pay what you feel • Get the digital artwork
               </label>
-              <input type="number" id="inputCustomPrice" class="input-search contribution-input" min="20" value="20">
+              <div class="contribution-input-row">
+                <span class="contribution-currency">ETB</span>
+                <input type="number" id="inputCustomPrice" class="input-search contribution-input" min="1" step="1" placeholder="e.g. 50" inputmode="numeric">
+              </div>
+              <div class="contribution-quick-picks" id="quickPicks">
+                <button type="button" class="quick-pick-chip" data-amount="10">10</button>
+                <button type="button" class="quick-pick-chip" data-amount="20">20</button>
+                <button type="button" class="quick-pick-chip" data-amount="50">50</button>
+                <button type="button" class="quick-pick-chip" data-amount="100">100</button>
+                <button type="button" class="quick-pick-chip" data-amount="200">200</button>
+              </div>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%;" id="btnProceedCheckout">Continue to Payment</button>
+            <button class="btn btn-primary" style="width: 100%;" id="btnProceedCheckout" disabled>Continue to Payment</button>
           </div>
         </div>
       </div>
@@ -400,18 +450,27 @@
           Direct transfer to merchant settlement accounts:
         </p>
 
-        <div class="payment-selection">
-          <div class="payment-tile selected" data-method="Telebirr">Telebirr</div>
-          <div class="payment-tile" data-method="CBE">CBE Birr</div>
+        <div class="payment-selection payment-selection-single">
+          <div class="payment-tile selected" data-method="Telebirr" data-number="0911234567" data-display="0911 23 45 67 (Telebirr)">Telebirr</div>
         </div>
 
         <div class="transfer-box">
           <div class="transfer-box-label">Transfer Destination:</div>
-          <div class="transfer-box-value" id="recipientNumber"> 0912345678 (Telebirr)</div>
+          <div class="transfer-box-value-row">
+            <div class="transfer-box-value" id="recipientNumber">0911 23 45 67 (Telebirr)</div>
+            <button class="copy-btn" id="btnCopyNumber" type="button" data-copy="0911234567">
+              <span class="copy-btn-icon" aria-hidden="true">⧉</span><span class="copy-btn-label">Copy</span>
+            </button>
+          </div>
         </div>
 
         <div class="upload-field">
-          <label for="proofFileInput">Upload Payment Receipt</label>
+          <label for="inputReferenceNumber">Transaction Reference Number</label>
+          <input type="text" id="inputReferenceNumber" class="input-search" style="width: 100%;" placeholder="e.g. FT25XXXXXXX" autocomplete="off">
+        </div>
+
+        <div class="upload-field">
+          <label for="proofFileInput">Upload Payment Receipt <span class="upload-optional">(optional)</span></label>
           <input type="file" id="proofFileInput" accept="image/*">
         </div>
 
@@ -425,22 +484,26 @@
           Checking your transaction receipt against our mobile payment records...
         </p>
         <div id="downloadContainer" class="download-container">
-          <button class="btn btn-primary" id="btnDownloadArtifact">⬇️ Download High-Res Drawing Photo</button>
+          <p class="download-unlocked-note">Artwork unlocked 🌼</p>
+          <p class="download-auto-note">Your drawing is downloading automatically...</p>
+          <button class="btn btn-outline" id="btnDownloadArtifact">⬇️ Download High Resolution</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Holiday Background Music -->
-  <audio id="bgMusic" src="assets/music/holiday.m4a" loop preload="auto"></audio>
+  <!-- Holiday Background Music: no src attribute up front, and preload="none"
+       so nothing downloads until the person actually opts in to play it. -->
+  <audio id="bgMusic" loop preload="none" data-src="assets/music/holiday.m4a"></audio>
   <button
     class="music-toggle"
     id="musicToggle"
     type="button"
+    hidden
     aria-pressed="true"
     aria-label="Mute holiday music"
     title="Mute holiday music"
-  >🎵</button>
+  ><span class="music-toggle-icon" aria-hidden="true">🔇</span><span class="music-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
 
   <script src="app.js"></script>
 </body>
