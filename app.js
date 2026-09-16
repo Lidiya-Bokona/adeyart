@@ -12,70 +12,60 @@
     selectedNumber: '0911234567',
     carouselIndex: 0,
     favorites: JSON.parse(localStorage.getItem('adey_art_favs') || '[]'),
-    likeCounts: JSON.parse(localStorage.getItem('adey_art_like_counts') || '{}'),
     catalog: [
       {
         id: 'flower-01',
         title: 'Adey Abeba #01',
         file: 'assets/flowers/flower1.jpg',
-        desc: 'Hand-drawn on paper with colored markers, inscribed with warm New Year wishes.',
-        baseLikes: 0
+        desc: 'Hand-drawn on paper with colored markers, inscribed with warm New Year wishes.'
       },
       {
         id: 'flower-02',
         title: 'Adey Abeba #02 (Highland Daisy)',
         file: 'assets/flowers/flower2.jpg',
-        desc: 'Vibrant yellow gouache and pencil drawing on paper with festive holiday blessings.',
-        baseLikes: 0
+        desc: 'Vibrant yellow gouache and pencil drawing on paper with festive holiday blessings.'
       },
       {
         id: 'flower-03',
         title: 'Adey Abeba #03',
         file: 'assets/flowers/flower3.jpg',
-        desc: 'Hand-painted ceremonial flower drawing decorated with traditional cross patterns.',
-        baseLikes: 0
+        desc: 'Hand-painted ceremonial flower drawing decorated with traditional cross patterns.'
       },
       {
         id: 'flower-04',
         title: 'Adey Abeba #04 (Spring Sunburst)',
         file: 'assets/flowers/flower4.jpg',
-        desc: 'Detailed pencil and watercolor bloom on paper celebrating the end of the winter rains.',
-        baseLikes: 0
+        desc: 'Detailed pencil and watercolor bloom on paper celebrating the end of the winter rains.'
       },
       {
         id: 'flower-05',
         title: 'Adey Abeba #05 (Peace & Harmony)',
         file: 'assets/flowers/flower5.jpg',
-        desc: 'Original paper sketch with bright yellow petals symbolizing peace and new beginnings.',
-        baseLikes: 0
+        desc: 'Original paper sketch with bright yellow petals symbolizing peace and new beginnings.'
       },
       {
         id: 'flower-06',
         title: 'Adey Abeba #06 (Holiday Bouquet)',
         file: 'assets/flowers/flower6.jpg',
-        desc: 'Full paper composition of clustered Adey Abeba blooms hand-drawn for neighborhood gift-giving.',
-        baseLikes: 0
+        desc: 'Full paper composition of clustered Adey Abeba blooms hand-drawn for neighborhood gift-giving.'
       },
       {
         id: 'flower-07',
         title: 'Adey Abeba #07 (Morning Bloom)',
         file: 'assets/flowers/flower7.jpg',
-        desc: 'Soft pastel drawing on paper capturing the first Adey Abeba blooms of the season.',
-        baseLikes: 0
+        desc: 'Soft pastel drawing on paper capturing the first Adey Abeba blooms of the season.'
       },
       {
         id: 'flower-08',
         title: 'Adey Abeba #08 (Golden Field)',
         file: 'assets/flowers/flower8.jpg',
-        desc: 'Layered marker and pencil piece depicting a full field of golden highland daisies.',
-        baseLikes: 0
+        desc: 'Layered marker and pencil piece depicting a full field of golden highland daisies.'
       },
       {
         id: 'flower-09',
         title: 'Adey Abeba #09 (New Year Wish)',
         file: 'assets/flowers/flower9.jpg',
-        desc: 'A closing piece for the collection, hand-inscribed with a personal Enkutatash wish.',
-        baseLikes: 0
+        desc: 'A closing piece for the collection, hand-inscribed with a personal Enkutatash wish.'
       }
     ],
     orders: []
@@ -149,7 +139,36 @@
   function ensureMusicSource() {
     if (dom.bgMusic && !dom.bgMusic.src && dom.bgMusic.dataset.src) {
       dom.bgMusic.src = dom.bgMusic.dataset.src;
+      dom.bgMusic.load();
     }
+  }
+
+  // If a gesture-triggered play() still gets rejected (e.g. a phone on a
+  // slow connection hadn't buffered the file yet at the moment of the
+  // tap), arm a one-shot listener so the very next tap anywhere on the
+  // page retries playback instead of leaving music silently stuck off.
+  let musicRetryArmed = false;
+  let musicRetryHandler = null;
+
+  function disarmMusicRetry() {
+    if (!musicRetryArmed) return;
+    musicRetryArmed = false;
+    if (musicRetryHandler) {
+      document.removeEventListener('touchend', musicRetryHandler);
+      document.removeEventListener('click', musicRetryHandler);
+      musicRetryHandler = null;
+    }
+  }
+
+  function armMusicRetry() {
+    if (musicRetryArmed) return;
+    musicRetryArmed = true;
+    musicRetryHandler = () => {
+      disarmMusicRetry();
+      if (!userMutedMusic()) tryPlayMusic();
+    };
+    document.addEventListener('touchend', musicRetryHandler, { once: true, passive: true });
+    document.addEventListener('click', musicRetryHandler, { once: true });
   }
 
   function tryPlayMusic() {
@@ -165,12 +184,17 @@
         .catch(() => {
           // Browser still declined to play (e.g. media not ready yet).
           setMusicUIState(false);
+          armMusicRetry();
         });
     }
   }
 
   function pauseMusic() {
-    if (!dom.bgMusic || dom.bgMusic.paused) return;
+    disarmMusicRetry();
+    if (!dom.bgMusic || dom.bgMusic.paused) {
+      setMusicUIState(false);
+      return;
+    }
     dom.bgMusic.pause();
     setMusicUIState(false);
   }
@@ -181,9 +205,8 @@
       localStorage.setItem(MUSIC_MUTED_KEY, '0');
       tryPlayMusic();
     } else {
-      dom.bgMusic.pause();
       localStorage.setItem(MUSIC_MUTED_KEY, '1');
-      setMusicUIState(false);
+      pauseMusic();
     }
   }
 
@@ -209,9 +232,9 @@
     });
   }
 
-  /* Entry Gate — a small ceremony before the site opens. Music is only
-     ever started here, inside a real click, so browsers never block it,
-     and only if the person left the "Play holiday music" box checked. */
+  /* Entry Gate — a small ceremony before the site opens. Music can be
+     started directly from the checkbox or when entering the garden,
+     inside real user gestures. */
   function enterGarden() {
     if (dom.entryGate) {
       dom.entryGate.classList.add('is-leaving');
@@ -221,13 +244,32 @@
     if (dom.musicToggle) dom.musicToggle.hidden = false;
     const wantsMusic = dom.entryMusicCheck ? dom.entryMusicCheck.checked : true;
     localStorage.setItem(MUSIC_MUTED_KEY, wantsMusic ? '0' : '1');
-    if (wantsMusic) tryPlayMusic();
-    else setMusicUIState(false);
+    if (wantsMusic) {
+      tryPlayMusic();
+    } else {
+      pauseMusic();
+    }
   }
 
   function initEntryGate() {
     if (!dom.entryGate || !dom.btnEnterGarden) return;
     document.body.classList.add('gate-open');
+
+    if (dom.entryMusicCheck) {
+      if (userMutedMusic()) {
+        dom.entryMusicCheck.checked = false;
+      }
+      dom.entryMusicCheck.addEventListener('change', () => {
+        if (dom.entryMusicCheck.checked) {
+          localStorage.setItem(MUSIC_MUTED_KEY, '0');
+          tryPlayMusic();
+        } else {
+          localStorage.setItem(MUSIC_MUTED_KEY, '1');
+          pauseMusic();
+        }
+      });
+    }
+
     dom.btnEnterGarden.addEventListener('click', () => {
       document.body.classList.remove('gate-open');
       enterGarden();
@@ -371,14 +413,8 @@
   }
 
   /* Catalog */
-  function getLikeCount(item) {
-    const bump = STATE.likeCounts[item.id] || 0;
-    return item.baseLikes + bump;
-  }
-
   function createCardHTML(item) {
     const isFav = STATE.favorites.includes(item.id);
-    const likeCount = getLikeCount(item);
     return `
       <article class="card">
         <div class="card-preview">
@@ -388,9 +424,9 @@
           <h3 class="card-title">${item.title}</h3>
           <p class="card-desc">${item.desc}</p>
           <div class="card-footer">
-            <button class="card-like-btn ${isFav ? 'liked' : ''}" data-fav="${item.id}" aria-label="${isFav ? 'Unlike' : 'Like'} this drawing" aria-pressed="${isFav}">
-              <span class="card-like-icon" aria-hidden="true">${isFav ? '❤️' : '🤍'}</span>
-              <span class="card-like-count">${likeCount}</span>
+            <button class="card-save-btn ${isFav ? 'saved' : ''}" data-fav="${item.id}" aria-label="${isFav ? 'Remove from Saved' : 'Save'} this drawing" aria-pressed="${isFav}">
+              <span class="card-save-icon" aria-hidden="true">${isFav ? '❤️' : '🤍'}</span>
+              <span class="card-save-label">${isFav ? 'Saved' : 'Save'}</span>
             </button>
             <button class="btn btn-primary" data-action="buy" data-id="${item.id}">Get This Flower 🌼</button>
           </div>
@@ -420,13 +456,10 @@
 
   function toggleFavorite(id) {
     const idx = STATE.favorites.indexOf(id);
-    const nowLiked = idx === -1;
     if (idx > -1) STATE.favorites.splice(idx, 1);
     else STATE.favorites.push(id);
 
-    STATE.likeCounts[id] = (STATE.likeCounts[id] || 0) + (nowLiked ? 1 : -1);
     localStorage.setItem('adey_art_favs', JSON.stringify(STATE.favorites));
-    localStorage.setItem('adey_art_like_counts', JSON.stringify(STATE.likeCounts));
     updateFavBadge();
     renderCatalog();
     renderFavorites();
@@ -544,8 +577,8 @@
         status: 'Settled'
       });
 
-      dom.verificationHeading.textContent = '🌼 You helped a little flower bloom. Thank you for supporting Daniel\'s art. 🇪🇹';
-      dom.verificationText.textContent = '';
+      dom.verificationHeading.textContent = '🌼 Your flower is ready!';
+      dom.verificationText.textContent = 'Thank you for supporting Daniel\'s art';
       dom.downloadContainer.style.display = 'block';
       triggerDownload();
     }, 1800);
@@ -659,6 +692,15 @@
   });
 
   window.addEventListener('scroll', updateHeaderScrollState, { passive: true });
+
+  // If the mobile menu is left open and the viewport crosses into the
+  // desktop layout (rotation, resize, external display), close it so the
+  // page doesn't stay scroll-locked via body.nav-open indefinitely.
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 820 && document.body.classList.contains('nav-open')) {
+      closeMobileNav();
+    }
+  });
 
   updateFavBadge();
   updateHeaderScrollState();
